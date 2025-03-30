@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <h1>JavaScript Functions</h1>
+        
+        
+        <p id="demo"></p>
+        
+        <script>
+
+            let x = wordle('scope', 'scoop');
+            document.getElementById("demo").innerHTML = x;
+
+            function findposition(position) {
+                if (position == 0){
+                    return 'The first letter';
+                } else if (position == 1) {
+                    return 'The second letter';
+                } else if (position == 2) {
+                    return 'The third letter';
+                } else if (position == 3) {
+                    return 'The fourth letter';
+                } else if (position == 4) {
+                    return 'The fifth letter';
+                } else {
+                    return 'Error: The position must be between 1 and 5.';
+                }
+
+            }
+
+
+            function wordle(target, guess) {
+            
+                let sentence = '';
+
+                for (let i = 0; i < 5; i++) {
+                    if (guess[i] === target[i]) {
+                        let s1 = findposition(i);
+                        let s2 = 'is in the correct position';
+                        sentence += s1 + ' ' + s2 + '<br>';
+                    }
+                    else if (guess[i] !== target[i]) {
+                        let index = target.lastIndexOf(guess[i]);
+                        if(index == -1) {
+                            let s1 = findposition(i);
+                            let s3 = 'does not appear in the word';
+                            sentence += s1 + ' ' + s3 + '<br>';
+
+                        } else {
+                            let s1 = findposition(i);
+                            let s4 = 'appears in the word, but in a different position';
+                            sentence += s1 + ' ' + s4 + '<br>';
+                        }
+
+                    }
+                }
+
+                return sentence;
+            }
+
+
+        </script>
+
+    </body>
+
+</html>

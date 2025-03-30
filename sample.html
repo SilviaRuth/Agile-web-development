@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Coding Practices</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Best Coding Practices</h1>
+        <p class="text-center">Select the best practices you follow:</p>
+        
+        <div id="practices-list" class="mb-3">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="semantic-html">
+                <label class="form-check-label" for="semantic-html">Use semantic HTML for accessibility</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="responsive-design">
+                <label class="form-check-label" for="responsive-design">Ensure responsive design using CSS Grid/Flexbox</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="optimized-images">
+                <label class="form-check-label" for="optimized-images">Optimize images for better performance</label>
+            </div>
+        </div>
+        
+        <p><strong>Summary:</strong> <span id="summary">0</span> best practices followed</p>
+        <button id="reward-btn" class="btn btn-success d-none">Get Reward</button>
+        <div id="reward-img" class="mt-3 text-center"></div>
+    </div>
+    
+    <script>
+        $(document).ready(function () {
+            const checkboxes = $(".form-check-input");
+            const summary = $("#summary");
+            const rewardBtn = $("#reward-btn");
+            const rewardImg = $("#reward-img");
+    
+            // Load stored selections
+            checkboxes.each(function () {
+                const id = $(this).attr("id");
+                const storedValue = localStorage.getItem(id);
+                if (storedValue === "true") {
+                    $(this).prop("checked", true);
+                }
+            });
+    
+            // Update summary
+            function updateSummary() {
+                const count = checkboxes.filter(":checked").length;
+                summary.text(count);
+                localStorage.setItem("checkedCount", count);
+    
+                // Show reward button if criteria met (e.g., 2 out of 3 checked)
+                if (count >= 2) {
+                    rewardBtn.removeClass("d-none");
+                } else {
+                    rewardBtn.addClass("d-none");
+                    rewardImg.html(""); // Clear image when below criteria
+                }
+            }
+    
+            // Handle checkbox click
+            checkboxes.on("change", function () {
+                const id = $(this).attr("id");
+                localStorage.setItem(id, $(this).is(":checked"));
+                updateSummary();
+            });
+    
+            // Fetch reward image on button click
+            rewardBtn.on("click", function () {
+                $.get("https://api.thecatapi.com/v1/images/search", function (data) {
+                    rewardImg.html(`<img src="${data[0].url}" class="img-fluid rounded mt-2" width="300">`);
+                });
+            });
+    
+            // Initialize summary
+            updateSummary();
+        });
+    </script>
+</body>
+</html>

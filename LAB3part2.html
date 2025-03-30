@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript Validation</h2>
+
+<p>Please input a number between 1 and 10:</p>
+
+<input id="numb" type="number">
+
+<p>Enter another number:</p>
+
+<input id="numb2" type="number">
+
+<button type="button" onclick="lcm()">Submit</button>
+
+<p id="demo"></p>
+
+<script>
+    // Function to calculate the LCM of two numbers
+
+    function lcm() {
+
+        let a = parseInt(document.getElementById("numb").value);
+        let b = parseInt(document.getElementById("numb2").value);
+
+        let result = (a * b) / gcd(a, b);
+
+        document.getElementById("demo").innerHTML = "LCM: " + result;
+    }
+
+    function gcd(a, b) {
+        if (b === 0) {
+            return a;
+        }
+        return gcd(b, a % b);
+    }
+</script>
+
+</body>
+</html> 

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    <body>
+        <h1>JavaScript Functions</h1>
+        
+        
+        <p id="demo"></p>
+        
+        <script>
+
+            let x = wordle('CRAZE', 'TREES');
+            document.getElementById("demo").innerHTML = x;
+
+
+            function wordle(target, guess) {
+            
+                let sentence = '';
+                const result = [];
+                let wrongposition = [];
+
+                for (let i = 0; i < 5; i++) {
+                    if (guess[i] === target[i]) {
+                        result[i] = 2; //in the correct position
+
+                    }
+                    else if (guess[i] !== target[i]) {
+
+                        let index = target.indexOf(guess[i]);
+
+                        let position = wrongposition.indexOf(index);
+
+                        if(index == -1) {
+                            result[i] = 0; //does not appear in the word
+
+                        } else if(position == -1) { //the wrong position is not in the array
+
+                            wrongposition.push(index); //add the wrong position to the array
+
+                            result[i] = 1; //appears in the word, but in a different position
+
+                        } else { //the wrong position of the target is in the array, means the new letter appears more than once.
+
+                            result[i] = 0; //doesnot appear in the word
+
+                        }
+
+                    }
+                }
+
+                return result;
+            }
+
+
+        </script>
+
+    </body>
+
+</html>
